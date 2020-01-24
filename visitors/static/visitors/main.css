@@ -1,0 +1,64 @@
+body {
+    background-color: #2F2F2F;
+    color: #EEE;
+    font-family: "Fira Mono", monospace;
+    font-size: 16px;
+}
+
+.visit {
+    display: flex;
+    flex-direction: row;
+}
+
+.visit>* {
+    margin-right: 8px;
+}
+
+.visit>*:last-child {
+    margin-right: 0;
+}
+
+.visit__visitor {
+    position: relative;
+    cursor: pointer;
+    transition: .1s ease;
+}
+
+.visit__visitor:hover .visit__visitor__user_agent {
+    visibility: visible;
+}
+
+.visit__visitor__ip_address {
+    width: 144px;
+    text-align: center;
+}
+
+.visit__visitor__user_agent {
+    visibility: hidden;
+    position: absolute;
+    background-color: #202020;
+    padding: 16px;
+    width: 300px;
+    top: 24px;
+    left: -78px;
+    z-index: 1;
+}
+
+.focus {
+    color: crimson;
+}
+
+.visitor_list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.visitor {
+    background: #EEE;
+    color: black;
+    padding: 16px;
+    margin: 8px;
+    cursor: pointer;
+}
