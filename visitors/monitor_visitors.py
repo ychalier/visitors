@@ -6,7 +6,10 @@ def bot_blacklist(user_agent):
     blacklist = [
         "googlebot",
         "yandexbot",
-        "bingbot"
+        "bingbot",
+        "mj12bot",
+        "ahrefsbot",
+        "mail.ru_bot",
     ]
     for bot_agent in blacklist:
         if bot_agent in user_agent.lower():

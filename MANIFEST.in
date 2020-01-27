@@ -1,0 +1,4 @@
+include LICENSE
+include README.md
+recursive-include visitors/static *
+recursive-include visitors/templates *

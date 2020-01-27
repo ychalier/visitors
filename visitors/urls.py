@@ -5,6 +5,6 @@ from . import views
 app_name = "visitors"
 
 urlpatterns = [
-    url("^dummy.*", views.dummy, name="dummy"),
+    # url("^dummy.*", views.dummy, name="dummy"),
     path("monitor", views.monitor, name="monitor"),
 ]
