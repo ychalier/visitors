@@ -1,64 +1,59 @@
 body {
-    background-color: #2F2F2F;
-    color: #EEE;
-    font-family: "Fira Mono", monospace;
+    font-family: "Segoe UI";;
     font-size: 16px;
 }
 
-.visit {
+.body_wrapper {
+    max-width: 800px;
+    margin: 0 auto 0 auto;
+}
+
+.monitor {
+    display: flex;
+    flex-direction: column;
+}
+
+.monitor__row {
     display: flex;
     flex-direction: row;
 }
 
-.visit>* {
-    margin-right: 8px;
+header {
+    border-bottom: 1px solid lightgrey;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 18px;
 }
 
-.visit>*:last-child {
-    margin-right: 0;
+header>* {
+    margin-right: 16px;
 }
 
-.visit__visitor {
-    position: relative;
-    cursor: pointer;
-    transition: .1s ease;
-}
-
-.visit__visitor:hover .visit__visitor__user_agent {
-    visibility: visible;
-}
-
-.visit__visitor__ip_address {
-    width: 144px;
-    text-align: center;
-}
-
-.visit__visitor__user_agent {
-    visibility: hidden;
-    position: absolute;
-    background-color: #202020;
-    padding: 16px;
-    width: 300px;
-    top: 24px;
-    left: -78px;
-    z-index: 1;
-}
-
-.focus {
-    color: crimson;
-}
-
-.visitor_list {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.visitor {
-    background: #EEE;
+header a {
     color: black;
-    padding: 16px;
-    margin: 8px;
-    cursor: pointer;
+    text-decoration: none;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+.total {
+    margin-top: 16px;
+}
+
+.total--visits {
+    margin-right: 50px;
+}
+
+.total span {
+    font-weight: bold;
+}
+
+.total--visits span{
+    color: #3e95cd;
+}
+
+.total--visitors span{
+    color: #3cba9f;
 }

@@ -6,64 +6,38 @@
         <meta charset="utf-8">
         <title>Monitor visitors</title>
         <link rel="stylesheet" href="{% static 'visitors/main.css' %}">
-        <link href="https://fonts.googleapis.com/css?family=Fira+Mono&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width" />
     </head>
     <body>
-        <h1>Monitor visitors</h1>
-        <h2>Statistics</h2>
-        <table>
-            <tr>
-                <td><b>Total</b></td>
-                <td>{{stats.total}}</td>
-            </tr>
-            <tr>
-                <td><b>Today</b></td>
-                <td>{{stats.today}}</td>
-            </tr>
-        </table>
-        <h2>Logs</h2>
-        <div class="visitor_list">
-            {% for visitor in visitors %}
-            <div class="visitor" vid="{{visitor.id}}">
-                {{ visitor.ip_address }}
-            </div>
-            {% endfor %}
-        </div>
-        {% for visit in visits %}
-        <div class="visit">
-            <div class="visit__timestamp">
-                {{visit.timestamp|date:"Y-m-d H:i:s"}}
-            </div>
-            <div class="visit__visitor" vid="{{visit.visitor.id}}">
-                <div class="visit__visitor__ip_address">
-                    {{visit.visitor.ip_address}}
-                </div>
-                <div class="visit__visitor__user_agent">
-                    {{visit.visitor.user_agent}}
-                </div>
-            </div>
-            <div class="visit__path">
-                {{visit.path}}
-            </div>
-        </div>
-        {% endfor %}
         <script type="text/javascript">
-            let visitors = document.querySelectorAll(".visitor");
-            for (let i = 0; i < visitors.length; i++) {
-                let vid = visitors[i].getAttribute("vid");
-                visitors[i].addEventListener("mouseenter", (event) => {
-                    let visits = document.querySelectorAll(".visit__visitor[vid=\"" + vid + "\"]");
-                    for (let j = 0; j < visits.length; j++) {
-                        visits[j].className = "visit__visitor focus";
-                    }
-                });
-                visitors[i].addEventListener("mouseleave", (event) => {
-                    let visits = document.querySelectorAll(".visit__visitor[vid=\"" + vid + "\"]");
-                    for (let j = 0; j < visits.length; j++) {
-                        visits[j].className = "visit__visitor";
-                    }
-                });
-            }
+            var VISITORS_API_URL = "{% url 'visitors:api' %}";
         </script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+        <div class="body_wrapper">
+            <header>
+                <a href="{% url 'visitors:monitor' %}"><b>Monitor visitors</b></a>
+                <a href="{% url 'visitors:monitor' %}">Dashboard</a>
+                <a href="{% url 'visitors:dump' %}">Dump</a>
+            </header>
+            <div class="monitor">
+                <div class="monitor__row">
+                    <div class="total total--visits">
+                        Total visits: <span id="total_visits">0</span>
+                    </div>
+                    <div class="total total--visitors">
+                        Total visitors: <span id="total_visitors">0</span>
+                    </div>
+                </div>
+                <h2>Traffic Evolution</h2>
+                <div class="monitor__row">
+                    <canvas id="visits_linechart"></canvas>
+                </div>
+                <h2>Most Viewed Pages</h2>
+                <div class="monitor__row">
+                    <canvas id="paths_barchart"></canvas>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="{% static 'visitors/main.js' %}"></script>
     </body>
 </html>
