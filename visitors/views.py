@@ -60,6 +60,26 @@ def get_field_per_path(field):
     return field_per_path
 
 
+def extract_path_group(path):
+    if path == "/":
+        return "/"
+    if "/" in path[1:]:
+        second_slash_index = path[1:].index("/")
+        return path[1:(second_slash_index + 1)]
+    return path[1:]
+
+
+def get_visits_per_path_group():
+    visits_per_path_group = dict()
+    visits_per_path = get_field_per_path("id")
+    for path, count in visits_per_path.items():
+        group = extract_path_group(path)
+        visits_per_path_group.setdefault(group, 0)
+        visits_per_path_group[group] += count
+    return visits_per_path_group
+
+
+
 @login_required
 def api(request):
     """API view"""
@@ -75,6 +95,8 @@ def api(request):
         elif part == "total":
             response["total_visits"] = models.Visit.objects.all().count()
             response["total_visitors"] = models.Visitor.objects.all().count()
+        elif part == "group":
+            response["visits_per_group"] = get_visits_per_path_group()
     return HttpResponse(json.dumps(response), content_type="application/json")
 
 

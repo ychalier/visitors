@@ -13,6 +13,7 @@
             var VISITORS_API_URL = "{% url 'visitors:api' %}";
         </script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+        <script type="text/javascript" src="{% static 'visitors/chartjs-plugin-colorschemes.min.js' %}"></script>
         <div class="body_wrapper">
             <header>
                 <a href="{% url 'visitors:monitor' %}"><b>Monitor visitors</b></a>
@@ -35,6 +36,11 @@
                 <h2>Most Viewed Pages</h2>
                 <div class="monitor__row">
                     <canvas id="paths_barchart"></canvas>
+
+                </div>
+                <h2>Visits per Page Group</h2>
+                <div class="monitor__row">
+                    <canvas id="group_piechart"></canvas>
                 </div>
             </div>
         </div>

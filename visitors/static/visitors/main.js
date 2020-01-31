@@ -39,6 +39,17 @@ sendRequest(VISITORS_API_URL + "?part=traffic", (response) => {
                 fill: false
             }]
         },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        autoSkip: true,
+                        maxRotation: 90,
+                        minRotation: 90
+                    }
+                }]
+            }
+        }
     });
 });
 
@@ -79,6 +90,39 @@ sendRequest(VISITORS_API_URL + "?part=paths", (response) => {
                         beginAtZero: true
                     }
                 }],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 90,
+                        minRotation: 90,
+                    },
+                }],
+            },
+        }
+    });
+});
+
+sendRequest(VISITORS_API_URL + "?part=group", (response) => {
+    let canvas = document.getElementById("group_piechart");
+    let labels = [];
+    let visitsData = [];
+    for (let group in response.visits_per_group) {
+        labels.push(group);
+        visitsData.push(response.visits_per_group[group]);
+    }
+    let chart = new Chart(canvas, {
+        type: "doughnut",
+        data: {
+            datasets: [{
+                data: visitsData
+            }],
+            labels: labels
+        },
+        options: {
+            plugins: {
+                colorschemes: {
+                    scheme: "tableau.Tableau10"
+                }
             }
         }
     });
