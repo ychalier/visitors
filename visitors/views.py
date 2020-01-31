@@ -53,6 +53,12 @@ def get_field_per_day(field):
     return field_per_day
 
 
+def get_field_per_path(field):
+    field_per_path = dict()
+    for item in groupby(models.Visit.objects.all(), "path", field):
+        field_per_path[item["path"]] = item["count"]
+    return field_per_path
+
 
 @login_required
 def api(request):
@@ -61,14 +67,8 @@ def api(request):
     response = dict()
     for part in parts.split(","):
         if part == "paths":
-            response["visits_per_path"] = list(
-                groupby(models.Visit.objects.all(), "path", "id")
-                .order_by("path")
-            )
-            response["visitors_per_path"] = list(
-                groupby(models.Visit.objects.all(), "path", "visitor")
-                .order_by("path")
-            )
+            response["visits_per_path"] = get_field_per_path("id")
+            response["visitors_per_path"] = get_field_per_path("visitor")
         elif part == "traffic":
             response["traffic_visits"] = get_field_per_day("id")
             response["traffic_visitors"] = get_field_per_day("visitor")

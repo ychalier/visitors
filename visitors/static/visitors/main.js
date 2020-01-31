@@ -47,22 +47,28 @@ sendRequest(VISITORS_API_URL + "?part=paths", (response) => {
     let labels = [];
     let visitsData = [];
     let visitorsData = [];
-    response.visits_per_path.forEach((item, i) => {
-        labels.push(item.path);
-        visitsData.push(item.count);
-        visitorsData.push(response.visitors_per_path[i].count);
-    });
+    for (let item in response.visits_per_path) {
+        labels.push(item);
+    }
+    labels.sort(function(a, b) {
+        return response.visits_per_path[b] - response.visits_per_path[a];
+    })
+    labels.forEach((item, i) => {
+        visitsData.push(response.visits_per_path[item]);
+        visitorsData.push(response.visitors_per_path[item]);
+    })
+    let sliceEnd = 10;
     let chart = new Chart(canvas, {
         type: "bar",
         data: {
-            labels: labels,
+            labels: labels.slice(0, sliceEnd),
             datasets: [{
                 label: 'visits',
-                data: visitsData,
+                data: visitsData.slice(0, sliceEnd),
                 backgroundColor: '#3e95cd',
             }, {
                 label: 'visitors',
-                data: visitorsData,
+                data: visitorsData.slice(0, sliceEnd),
                 backgroundColor: '#3cba9f',
             }]
         },
